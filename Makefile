@@ -1,6 +1,6 @@
 all:
-	$(MAKE) -C googletest/googletest/make
-	$(MAKE) -C YarDB yar
+	$(MAKE) -C googletest/googletest/make all
+	$(MAKE) -C YarDB bin lib
 
 clean:
 	$(MAKE) -C googletest/googletest/make clean
