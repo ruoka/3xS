@@ -1,0 +1,97 @@
+body {
+  display: flex;
+  min-height: 95vh;
+  flex-direction: column;
+  background: black;
+  color: lime;
+  font-family: "Comic Sans", "Comic Sans MS", cursive;
+}
+section {
+  display: flex;
+  flex: auto;
+}
+section aside {
+  display: flex;
+  flex-flow: column;
+  flex: none;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+section aside header {
+  display: flex;
+  flex: none;
+  height: 90px;
+}
+section aside header h2 {
+  font-size: 40px;
+  font-weight: bold;
+  margin: auto;
+}
+section aside nav {
+  padding-top: 10px;
+}
+section aside nav div {
+  width: 100px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+section main {
+  display: flex;
+  flex-flow: column;
+  flex: 1 1 auto;
+}
+section main header {
+  display: flex;
+  flex-flow: row nowrap;
+  flex: none;
+  height: 90px;
+}
+section main header nav {
+  display: flex;
+  justify-content: flex-start;
+  margin: auto auto auto 0;
+}
+section main header nav div {
+  display: inline-block;
+  width: 100px;
+  margin-right: 20px;
+  text-align: center;
+}
+section main header div {
+  align-self: flex-end;
+  width: 300px;
+  margin: auto 0 auto auto;
+  text-align: left;
+}
+section main article {
+  padding-top: 10px;
+  height: 80vh;
+  max-width: 85vw;
+  overflow:scroll;
+}
+section main article label {
+  display: inline-block;
+  width: 200px;
+}
+fieldset {
+  padding-top:10px;
+  border:1px solid lime;
+  border-radius:8px;
+  box-shadow:0 0 10px #666;
+}
+[maxlength="10"] {
+  width: 17ch;
+}
+[maxlength="11"], [maxlength="12"] {
+  width: 12ch;
+}
+[maxlength="15"], [maxlength="16"] {
+  width: 17ch;
+}
+[maxlength="35"] {
+  width: 36ch;
+}
+body footer {
+  padding-top: 15px;
+  text-align: center;
+}

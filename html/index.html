@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3XS</title>
+    <link rel="stylesheet" type="text/css" href="u2a.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <script src="u2a.js" type="text/javascript"></script>
+</head>
+<body>
+    <section>
+        <aside>
+            <header>
+                <h2>3xS&trade;</h2>
+            </header>
+            <nav id = "domains">
+                <div id = "trades">Trades</div>
+                <div id = "ssis">SSIs</div>
+                <div id = "sis">SIs</div>
+                <div id = "transfers">Trasfers</div>
+                <div id = "balances">Balances</div>
+                <div id = "messages">Messages</div>
+            </nav>
+        </aside>
+        <main>
+            <header>
+                <nav class = "trades">
+                    <div data-request = "trades/get">Search</div>
+                    <div data-request = "trades/post">Capture</div>
+                </nav>
+                <nav class = "ssis">
+                    <div data-request = "ssis/get">Search</div>
+                    <div data-request = "ssis/post">Create</div>
+                </nav>
+                <nav class = "sis">
+                    <div data-request = "sis/get">Search</div>
+                    <div data-request = "sis/post">Instruct</div>
+                </nav>
+                <nav class = "transfers">
+                    <div data-request = "transfers/get">Search</div>
+                    <div data-request = "transfers/post">Enter</div>
+                </nav>
+                <nav class = "balances">
+                    <div data-request = "balances/get">Search</div>
+                </nav>
+                <nav class = "messages">
+                    <div data-request = "messages/inbound/get">Inbound</div>
+                    <div data-request = "messages/outbound/get">Outbound</div>
+                    <div data-request = "messages/upload/post">Upload</div>
+                </nav>
+                <div><time>1976-02-22T10:00:00+02:00</time><br/>Z687717</div>
+            </header>
+            <article id = "article"></article>
+        </main>
+    </section>
+    <footer>
+        <div>Copyright &copy; 2017 Kaius Ruokonen</div>
+    </footer>
+</body>
+</html>
