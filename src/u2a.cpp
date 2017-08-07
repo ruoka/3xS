@@ -7,23 +7,27 @@ constexpr auto eof = static_cast<char>(char_traits<char>::eof());
 
 int main(int argc, char const **argv)
 {
+    auto file = ifstream{};
     auto server = http::server{};
 
-    auto ifs1 = ifstream{"html/index.html"};
-    auto str1 = ""s;
-    getline(ifs1, str1, eof);
-    server.get("/").response(str1);
-    server.get("/index.html").response(str1);
+    file.open("html/u2a.html");
+    auto html = ""s;
+    getline(file, html, eof);
+    file.close();
+    server.get("/").response(html);
+    server.get("/index.html").response(html);
 
-    auto ifs2 = ifstream{"css/u2a.css"};
-    auto str2 = ""s;
-    getline(ifs2, str2, eof);
-    server.get("/u2a.css").response(str2);
+    file.open("css/u2a.css");
+    auto css = ""s;
+    getline(file, css, eof);
+    file.close();
+    server.get("/u2a.css").response(css);
 
-    auto ifs3 = ifstream{"js/u2a.js"};
-    auto str3 = ""s;
-    getline(ifs3, str3, eof);
-    server.get("/u2a.js").response(str3);
+    file.open("js/u2a.js");
+    auto js = ""s;
+    getline(file, js, eof);
+    file.close();
+    server.get("/u2a.js").response(js);
 
     server.listen("8080");
     return 0;
