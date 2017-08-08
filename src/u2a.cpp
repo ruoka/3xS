@@ -29,11 +29,11 @@ int main(int argc, char const **argv)
     file.close();
     server.get("/u2a.js").response(js);
 
-    file.open("json/models.json");
+    file.open("json/documents.json");
     auto json = ""s;
     getline(file, json, eof);
     file.close();
-    server.get("/models.json").response(json);
+    server.get("/documents.json").response(json);
 
     server.listen("8080");
     return 0;

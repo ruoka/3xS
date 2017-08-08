@@ -1,5 +1,5 @@
 {
-  "trade": {
+  "trades": {
     "id": {
       "type": "text",
       "minlength": 1,
