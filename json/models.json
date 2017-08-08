@@ -1,0 +1,62 @@
+{
+  "trade": {
+    "id": {
+      "type": "text",
+      "minlength": 1,
+      "maxlength": 16,
+      "required": true
+    },
+    "placeOfTrade": {
+      "select": "MIC",
+      "required": true
+    },
+    "ISIN": {
+      "type": "text",
+      "minlength": 12,
+      "maxlength": 12,
+      "required": true
+    },
+    "seller": {
+      "type": "text",
+      "minlength": 1,
+      "maxlength": 11,
+      "required": true
+    },
+    "buyer": {
+      "type": "text",
+      "minlength": 1,
+      "maxlength": 11,
+      "required": true
+    },
+    "quantity": {
+      "type": "number",
+      "min": 0,
+      "max": 999999999999999,
+      "step": "any",
+      "maxlength": 15,
+      "required": true
+    },
+    "amount": {
+      "type": "number",
+      "min": 0,
+      "max": 999999999999999,
+      "step": "any",
+      "maxlength": 15,
+      "required": true
+    },
+    "currency": {
+      "select": "EUR",
+      "required": true
+    },
+    "tradeDate": {
+      "type": "date",
+      "maxlength": 10,
+      "required": true
+    },
+    "settlementDate": {
+      "type": "date",
+      "maxlength": 10,
+      "required": true
+    }
+  }
+}

@@ -82,11 +82,28 @@ $(document).ready(function() {
             beforeSend: function() {
             },
             success: function (data) {
-                window.alert("OK")
+                window.alert("Success")
             },
             error: function (data) {
                 window.alert("Error")
             }
         })
+    })
+
+    $.ajax({
+        type: "GET",
+        url: "models.json",
+        data: {},
+        dataType: "json",
+        contentType: "application/json",
+        beforeSend: function() {
+        },
+        success: function (data) {
+            var names = data
+            window.alert(JSON.stringify(data))
+        },
+        error: function (data) {
+            window.alert("Error")
+        }
     })
 })
