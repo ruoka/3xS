@@ -14,13 +14,13 @@ $(BINDIR)/%: $(SRCDIR)/%.cpp
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(@:$(BINDIR)/%=$(SRCDIR)/%.cpp) $(OBJECTS) -o $@
 
+.PHONY: all
+all: modules $(TARGETS)
+
 .PHONY: modules
 modules:
 	$(MAKE) -C googletest/googletest/make all
 	$(MAKE) -C YarDB bin lib
-
-.PHONY: all
-all: modules $(TARGETS)
 
 .PHONY: clean
 clean:

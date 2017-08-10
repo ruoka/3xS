@@ -28,9 +28,12 @@ $(document).ready(function() {
 		$(this).addClass("active")
 	})
 
+    var models = {};
+
 	$("main header nav div").on("click", function() {
+        var name = $("aside nav div.active").attr("id")
 		$("#article").empty()
-		$("#article").load($(this).attr("data-request"))
+		$("#article").html(render_form(name, models[name]))
 		$(this).parent("nav").children("div").css("color", "lime")
 		$(this).parent("nav").children("div").css("background", "black")
 		$(this).parent("nav").children("div").removeClass("active")
@@ -55,7 +58,7 @@ $(document).ready(function() {
 		}
 	})
 
-	function model(form) {
+	function construct_document(form) {
 		var data = {}
 		var inputs = $(form).children("[name]")
 		$.map(inputs, function(value) {
@@ -63,14 +66,14 @@ $(document).ready(function() {
 		})
 		var sets = $(form).children("fieldset[name]")
 		$.map(sets, function(value) {
-			data[value.name] = model(value)
+			data[value.name] = construct_document(value)
 		})
 		return data
 	}
 
 	$("main article").on("submit", "form", function(event) {
 		event.preventDefault()
-		var data = model(this)
+		var data = construct_document(this)
 		window.alert(JSON.stringify(data))
 		$(this).attr("disabled", true)
 		$.ajax({
@@ -89,16 +92,58 @@ $(document).ready(function() {
 		})
 	})
 
+    function render_fieldset(fields) {
+    	var form = ""
+    	$.each(fields, function(name, fields) {
+    		if ("type" in fields) {
+    			form += "<label>" + name + "</label>"
+    			form += "<input name = '" + name + "' "
+    			$.each(fields, function(attribute, value) {
+    				form += attribute + "='" + value + "' "
+    			})
+    			form += ">"
+    			form += "<br/>"
+    		} else if ("select" in fields) {
+    			form += "<label>" + name + "</label>"
+    			form += "<select name = '" + name + "'>"
+    			$.each(fields.select, function(index, value) {
+    				form += "<option value ='" + value + "'>"
+    				form += value
+    				form += "</optaion>"
+    			})
+    			form += "</select>"
+    			form += "<br/>"
+    		} else {
+    			form += "<fieldset name='" + name + "'>"
+    			form += "<legend>" + name + "</legend>"
+    			form += render_fieldset(fields)
+    			form += "</fieldset>"
+    		}
+    	})
+    	return form
+    }
+
+    function render_form(name, document) {
+    	var form = "<form action='" + name + "' method='post'>"
+    	form += "<fieldset name='" + name + "'>"
+    	// form += "<legend>" + name + "</legend>"
+    	form += render_fieldset(document)
+    	form += "</fieldset>"
+    	form += "<input id='submit' type='submit' value='Submit'>"
+    	form += "</form>"
+    	return form
+    }
+
 	$.ajax({
 		type: "GET",
-		url: "documents.json",
+		url: "models.json",
 		data: {},
 		dataType: "json",
 		contentType: "application/json",
 		beforeSend: function() {},
 		success: function(data) {
-			var names = data
-			window.alert(JSON.stringify(data))
+			models = data;
+			window.alert(JSON.stringify(models))
 		},
 		error: function(data) {
 			window.alert("Error")

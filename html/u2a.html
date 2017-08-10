@@ -2,9 +2,9 @@
 <html>
 <head>
     <title>3XS</title>
-    <link rel="stylesheet" type="text/css" href="u2a.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
-    <script src="u2a.js" type="text/javascript"></script>
+    <link rel = "stylesheet" type = "text/css" href = "u2a.css"/>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type = "text/javascript"></script>
+    <script src = "u2a.js" type = "text/javascript"></script>
 </head>
 <body>
     <section>
@@ -12,7 +12,7 @@
             <header>
                 <h2>3xS&trade;</h2>
             </header>
-            <nav id = "domains">
+            <nav id = "models">
                 <div id = "trades">Trades</div>
                 <div id = "ssis">SSIs</div>
                 <div id = "sis">SIs</div>
@@ -24,28 +24,27 @@
         <main>
             <header>
                 <nav class = "trades">
-                    <div data-request = "trades/get">Search</div>
-                    <div data-request = "trades/post">Capture</div>
+                    <div class = "post">Capture</div>
+                    <div class = "get">Search</div>
                 </nav>
                 <nav class = "ssis">
-                    <div data-request = "ssis/get">Search</div>
-                    <div data-request = "ssis/post">Create</div>
+                    <div class = "post">Add</div>
+                    <div class = "get">Search</div>
                 </nav>
                 <nav class = "sis">
-                    <div data-request = "sis/get">Search</div>
-                    <div data-request = "sis/post">Instruct</div>
+                    <div class = "post">Instruct</div>
+                    <div class = "get">Search</div>
                 </nav>
                 <nav class = "transfers">
-                    <div data-request = "transfers/get">Search</div>
-                    <div data-request = "transfers/post">Enter</div>
+                    <div class = "post">Enter</div>
+                    <div class = "get">Search</div>
                 </nav>
                 <nav class = "balances">
-                    <div data-request = "balances/get">Search</div>
+                    <div class = "get">Search</div>
                 </nav>
                 <nav class = "messages">
-                    <div data-request = "messages/inbound/get">Inbound</div>
-                    <div data-request = "messages/outbound/get">Outbound</div>
-                    <div data-request = "messages/upload/post">Upload</div>
+                    <div class = "post">Upload</div>
+                    <div class = "get">Search</div>
                 </nav>
                 <div><time>1976-02-22T10:00:00+02:00</time><br/>Z687717</div>
             </header>
