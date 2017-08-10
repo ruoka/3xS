@@ -30,7 +30,19 @@ $(document).ready(function() {
 
     var models = {};
 
-	$("main header nav div").on("click", function() {
+	$("main header nav div.get").on("click", function() {
+        var name = $("aside nav div.active").attr("id")
+		$("#article").empty()
+		$("#article").load("http://localhost:2112/" + name)
+		$(this).parent("nav").children("div").css("color", "lime")
+		$(this).parent("nav").children("div").css("background", "black")
+		$(this).parent("nav").children("div").removeClass("active")
+		$(this).css("color", "black")
+		$(this).css("background", "lime")
+		$(this).addClass("active")
+	})
+
+	$("main header nav div.post").on("click", function() {
         var name = $("aside nav div.active").attr("id")
 		$("#article").empty()
 		$("#article").html(render_form(name, models[name]))
@@ -124,7 +136,7 @@ $(document).ready(function() {
     }
 
     function render_form(name, document) {
-    	var form = "<form action='" + name + "' method='post'>"
+    	var form = "<form action='http://localhost:2112/" + name + "' method='post'>"
     	form += "<fieldset name='" + name + "'>"
     	// form += "<legend>" + name + "</legend>"
     	form += render_fieldset(document)

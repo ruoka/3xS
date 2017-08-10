@@ -1,2 +1,5 @@
 bin
 googletest
+yar.db
+yar.db.pid
+js/spike.js
