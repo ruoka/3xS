@@ -56,6 +56,7 @@ section main header nav div {
   width: 100px;
   margin-right: 20px;
   text-align: center;
+  color: black;
 }
 section main header div {
   align-self: flex-end;
