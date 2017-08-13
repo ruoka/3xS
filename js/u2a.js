@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    var password = "demo"
+
+    var username = "demo"
+
+    var models = {}
+
     $("main header nav").hide()
 
     function clock() {
@@ -13,7 +19,11 @@ $(document).ready(function () {
     clock()
     setTimeout(clock, 1000)
 
-    var models = {};
+    $.ajaxSetup({
+        headers: {
+            Authorization: " Basic " + btoa(username + ":" + password)
+        }
+    })
 
     $.ajax({
         type: "GET",
@@ -92,7 +102,8 @@ $(document).ready(function () {
             },
             error: function(data) {
                 alert("Error")
-            }
+            },
+            xhrFields: {withCredentials: true}
         })
     })
 
