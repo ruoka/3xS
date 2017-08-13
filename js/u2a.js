@@ -13,6 +13,23 @@ $(document).ready(function() {
 
 	$("main header nav").hide()
 
+    var models = {};
+
+	$.ajax({
+		type: "GET",
+		url: "models.json",
+		data: {},
+		dataType: "json",
+		contentType: "application/json",
+		success: function(data) {
+			models = data;
+			window.alert(JSON.stringify(models))
+		},
+		error: function(data) {
+			window.alert("Error")
+		}
+	})
+
 	$("aside nav div").on("click", function() {
 		$("#article").empty()
 		$("main header nav div").css("color", "lime")
@@ -28,24 +45,10 @@ $(document).ready(function() {
 		$(this).addClass("active")
 	})
 
-    var models = {};
-
-	$("main header nav div.get").on("click", function() {
-        var name = $("aside nav div.active").attr("id")
-		$("#article").empty()
-		$("#article").load("http://localhost:2112/" + name)
-		$(this).parent("nav").children("div").css("color", "lime")
-		$(this).parent("nav").children("div").css("background", "black")
-		$(this).parent("nav").children("div").removeClass("active")
-		$(this).css("color", "black")
-		$(this).css("background", "lime")
-		$(this).addClass("active")
-	})
-
 	$("main header nav div.post").on("click", function() {
         var name = $("aside nav div.active").attr("id")
 		$("#article").empty()
-		$("#article").html(render_form(name, models[name]))
+		$("#article").html(renderForm(name, models[name]))
 		$(this).parent("nav").children("div").css("color", "lime")
 		$(this).parent("nav").children("div").css("background", "black")
 		$(this).parent("nav").children("div").removeClass("active")
@@ -70,22 +73,35 @@ $(document).ready(function() {
 		}
 	})
 
-	function construct_document(form) {
-		var data = {}
-		var inputs = $(form).children("[name]")
-		$.map(inputs, function(value) {
-			data[value.name] = $(value).val()
-		})
-		var sets = $(form).children("fieldset[name]")
-		$.map(sets, function(value) {
-			data[value.name] = construct_document(value)
-		})
-		return data
-	}
+	$("main header nav div.get").on("click", function() {
+        var name = $("aside nav div.active").attr("id")
+		$("#article").empty()
+		$(this).parent("nav").children("div").css("color", "lime")
+		$(this).parent("nav").children("div").css("background", "black")
+		$(this).parent("nav").children("div").removeClass("active")
+		$(this).css("color", "black")
+		$(this).css("background", "lime")
+		$(this).addClass("active")
+    	window.alert(name)
+    	$.ajax({
+    		type: "GET",
+    		url: "http://localhost:2112/" + name,
+    		dataType: "json",
+    		contentType: "application/json",
+    		success: function(data) {
+    			window.alert(JSON.stringify(data))
+		        $("#article").html(renderTable(name,data))
+    		},
+    		error: function(data) {
+    			window.alert("Error")
+    		}
+	    })
+    })
 
 	$("main article").on("submit", "form", function(event) {
 		event.preventDefault()
-		var data = construct_document(this)
+        var name = $("aside nav div.active").attr("id")
+		var data = constructDocument(this[name])
 		window.alert(JSON.stringify(data))
 		$(this).attr("disabled", true)
 		$.ajax({
@@ -104,8 +120,11 @@ $(document).ready(function() {
 		})
 	})
 
-    function render_fieldset(fields) {
+    function renderFieldset(name, fields, legend) {
     	var form = ""
+    	form += "<fieldset name='" + name + "'>"
+        if (legend)
+    	   form += "<legend>" + name + "</legend>"
     	$.each(fields, function(name, fields) {
     		if ("type" in fields) {
     			form += "<label>" + name + "</label>"
@@ -126,39 +145,55 @@ $(document).ready(function() {
     			form += "</select>"
     			form += "<br/>"
     		} else {
-    			form += "<fieldset name='" + name + "'>"
-    			form += "<legend>" + name + "</legend>"
-    			form += render_fieldset(fields)
-    			form += "</fieldset>"
+                form += ""
+    			form += renderFieldset(name, fields, true)
     		}
     	})
+    	form += "</fieldset>"
     	return form
     }
 
-    function render_form(name, document) {
+    function renderForm(name, document) {
     	var form = "<form action='http://localhost:2112/" + name + "' method='post'>"
-    	form += "<fieldset name='" + name + "'>"
-    	// form += "<legend>" + name + "</legend>"
-    	form += render_fieldset(document)
-    	form += "</fieldset>"
+    	form += renderFieldset(name, document, false)
     	form += "<input id='submit' type='submit' value='Submit'>"
     	form += "</form>"
     	return form
     }
 
-	$.ajax({
-		type: "GET",
-		url: "models.json",
-		data: {},
-		dataType: "json",
-		contentType: "application/json",
-		beforeSend: function() {},
-		success: function(data) {
-			models = data;
-			window.alert(JSON.stringify(models))
-		},
-		error: function(data) {
-			window.alert("Error")
-		}
-	})
+	function constructDocument(form) {
+		var data = {}
+		var inputs = $(form).children("[name]")
+		$.map(inputs, function(value) {
+            if ($(value).val() != "")
+			    data[value.name] = $(value).val()
+            else {
+                data[value.name] = null
+            }
+		})
+		var sets = $(form).children("fieldset[name]")
+		$.map(sets, function(value) {
+			data[value.name] = constructDocument(value)
+		})
+		return data
+	}
+
+    function renderTable(name, array) {
+        var model = models[name]
+        var table = "<table>"
+        table += "<tr>"
+        $.each(model, function(name, value) {
+            table += "<th>" + name + "</th>"
+        })
+        table += "</tr>"
+        $.each(array, function(name, document) {
+            table += "<tr>"
+            $.each(model, function(name, value) {
+                table += "<td>" + document[name] + "</td>"
+            })
+            table += "</tr>"
+        })
+        table += "</table>"
+        return table
+    }
 })
