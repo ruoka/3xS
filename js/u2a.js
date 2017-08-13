@@ -99,8 +99,9 @@ $(document).ready(function () {
     $("main article").on("submit", "form", function(event) {
         event.preventDefault()
         var data = constructObject()
+        $(this).children().prop("disabled", true)
+        $(this).children("#submit").hide()
         alert(JSON.stringify(data))
-        $(this).attr("disabled", true)
         $.ajax({
             type: $(this).attr("method"),
             url: $(this).attr("action"),

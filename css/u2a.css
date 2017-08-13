@@ -80,6 +80,9 @@ fieldset {
   border-radius:8px;
   box-shadow:0 0 10px #666;
 }
+fieldset[disabled] select {
+    background-color:white;
+}
 [maxlength="10"] {
   width: 17ch;
 }
