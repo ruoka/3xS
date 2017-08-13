@@ -74,14 +74,23 @@ section main article label {
   display: inline-block;
   width: 200px;
 }
-fieldset {
+section main article form fieldset {
   padding-top:10px;
   border:1px solid lime;
   border-radius:8px;
   box-shadow:0 0 10px #666;
 }
-fieldset[disabled] select {
-    background-color:white;
+section main article form fieldset[disabled] select {
+  background-color:white;
+}
+section main article table {
+  table-layout: auto;
+}
+section main article table th {
+  text-align: left;
+}
+section main article table td {
+  white-space:nowrap;
 }
 [maxlength="10"] {
   width: 17ch;
