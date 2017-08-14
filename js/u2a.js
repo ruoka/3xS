@@ -4,15 +4,15 @@ $(document).ready(function () {
     var password = ""
     var models = {}
 
+    $("main header nav").hide()
+
     if (username == "" || password == "") {
-        $("aside nav div").hide()
-        $("main header nav div").hide()
+        $("aside nav").hide()
         $("main form").show()
         $("main article").hide()
     }
     else {
-        $("aside nav div").show()
-        $("main header nav div").hide()
+        $("aside nav").show()
         $("main form").hide()
         $("main article").show()
     }
@@ -56,8 +56,7 @@ $(document).ready(function () {
                     success: function(data) {
                         models = data;
                         // alert(JSON.stringify(models))
-                        $("aside nav div").show()
-                        $("main header nav div").hide()
+                        $("aside nav").show()
                         $("main form").hide()
                         $("main article").show()
                         $("aside nav div").css("color", "lime")
@@ -94,8 +93,8 @@ $(document).ready(function () {
         $("main header nav div").css("color", "lime")
         $("main header nav div").css("background", "black")
         $("main header nav div").removeClass("active")
-        $("main header nav div").hide()
-        $("main header nav." + $(this).attr("id") + " div").show()
+        $("main header nav").hide()
+        $("main header nav." + $(this).attr("id")).show()
         $(this).parent("nav").children("div").css("color", "lime")
         $(this).parent("nav").children("div").css("background", "black")
         $(this).parent("nav").children("div").removeClass("active")
