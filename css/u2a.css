@@ -34,6 +34,7 @@ section aside nav div {
   width: 100px;
   margin-bottom: 20px;
   text-align: left;
+  color: black;
 }
 section main {
   display: flex;
@@ -63,6 +64,16 @@ section main header div {
   width: 300px;
   margin: auto 0 auto auto;
   text-align: left;
+}
+section main form {
+  padding-top: 10px;
+  height: 80vh;
+  max-width: 85vw;
+  overflow:scroll;
+}
+section main form label {
+  display: inline-block;
+  width: 80px;
 }
 section main article {
   padding-top: 10px;

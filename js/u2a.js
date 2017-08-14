@@ -1,12 +1,21 @@
 $(document).ready(function () {
 
-    var password = "demo"
-
-    var username = "demo"
-
+    var username = ""
+    var password = ""
     var models = {}
 
-    $("main header nav").hide()
+    if (username == "" || password == "") {
+        $("aside nav div").hide()
+        $("main header nav div").hide()
+        $("main form").show()
+        $("main article").hide()
+    }
+    else {
+        $("aside nav div").show()
+        $("main header nav div").hide()
+        $("main form").hide()
+        $("main article").show()
+    }
 
     function clock() {
         var date = new Date()
@@ -19,24 +28,49 @@ $(document).ready(function () {
     clock()
     setTimeout(clock, 1000)
 
-    $.ajaxSetup({
-        headers: {
-            Authorization: " Basic " + btoa(username + ":" + password)
-        }
-    })
-
-    $.ajax({
-        type: "GET",
-        url: "models.json",
-        dataType: "json",
-        contentType: "application/json",
-        success: function(data) {
-            models = data;
-            // alert(JSON.stringify(models))
-        },
-        error: function(data) {
-            alert("Error")
-        }
+    $("#login").on("click", function(event) {
+        event.preventDefault()
+        alert("Login")
+        var date = new Date()
+        var username = $("#username").val()
+        var password = $("#password").val()
+        var data = {username: username, timestamp: date.toISOString()}
+        $.ajaxSetup({
+            headers: {
+                Authorization: "Basic " + btoa(username + ":" + password)
+            }
+        })
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:2112/logins",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json",
+            success: function(data) {
+                alert("Success")
+                $.ajax({
+                    type: "GET",
+                    url: "models.json",
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function(data) {
+                        models = data;
+                        // alert(JSON.stringify(models))
+                        $("aside nav div").show()
+                        $("main header nav div").hide()
+                        $("main form").hide()
+                        $("main article").show()
+                        $("aside nav div").css("color", "lime")
+                    },
+                    error: function(data) {
+                        alert("Error")
+                    }
+                })
+            },
+            error: function(data) {
+                alert("Error")
+            }
+        })
     })
 
     $("nav div").hover(function() {
@@ -60,8 +94,8 @@ $(document).ready(function () {
         $("main header nav div").css("color", "lime")
         $("main header nav div").css("background", "black")
         $("main header nav div").removeClass("active")
-        $("main header nav").hide()
-        $("main header nav." + $(this).attr("id")).show()
+        $("main header nav div").hide()
+        $("main header nav." + $(this).attr("id") + " div").show()
         $(this).parent("nav").children("div").css("color", "lime")
         $(this).parent("nav").children("div").css("background", "black")
         $(this).parent("nav").children("div").removeClass("active")
