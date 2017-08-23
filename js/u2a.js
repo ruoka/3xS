@@ -162,32 +162,33 @@ $(document).ready(function () {
     })
 
     function renderFieldset(name, fields, legend) {
-        var fieldset = ""
-        fieldset += "<fieldset name='" + name + "'>"
+        var fieldset = "<fieldset name='" + name + "'>"
         if (legend)
            fieldset += "<legend>" + name + "</legend>"
         $.each(fields, function(name, fields) {
-            if ("type" in fields) {
-                fieldset += "<label>" + name + "</label>"
-                fieldset += "<input name = '" + name + "' "
-                $.each(fields, function(attribute, value) {
-                    fieldset += attribute + "='" + value + "' "
-                })
-                fieldset += ">"
-                fieldset += "<br/>"
-            } else if ("select" in fields) {
-                fieldset += "<label>" + name + "</label>"
-                fieldset += "<select name = '" + name + "'>"
-                $.each(fields.select, function(index, value) {
-                    fieldset += "<option value ='" + value + "'>"
-                    fieldset += value
-                    fieldset += "</optaion>"
-                })
-                fieldset += "</select>"
-                fieldset += "<br/>"
-            } else {
-                fieldset += ""
-                fieldset += renderFieldset(name, fields, true)
+            if (!("readonly" in fields)) {
+                if ("type" in fields) {
+                    fieldset += "<label>" + name + "</label>"
+                    fieldset += "<input name = '" + name + "' "
+                    $.each(fields, function(attribute, value) {
+                        fieldset += attribute + "='" + value + "' "
+                    })
+                    fieldset += ">"
+                    fieldset += "<br/>"
+                } else if ("select" in fields) {
+                    fieldset += "<label>" + name + "</label>"
+                    fieldset += "<select name = '" + name + "'>"
+                    $.each(fields.select, function(index, value) {
+                        fieldset += "<option value ='" + value + "'>"
+                        fieldset += value
+                        fieldset += "</optaion>"
+                    })
+                    fieldset += "</select>"
+                    fieldset += "<br/>"
+                } else {
+                    fieldset += ""
+                    fieldset += renderFieldset(name, fields, true)
+                }
             }
         })
         fieldset += "</fieldset>"
@@ -206,7 +207,9 @@ $(document).ready(function () {
     function constructFields(fieldset) {
         var data = {}
         $(fieldset).children("[name]").each(function(index, element) {
-            if ($(element).val() != "")
+            if($(element).attr("type") == "number")
+                data[element.name] = parseInt($(element).val(), 10)
+            else if ($(element).val() != "")
                 data[element.name] = $(element).val()
             else {
                 data[element.name] = null

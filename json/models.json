@@ -388,6 +388,13 @@
          "maxlength":15,
          "required":""
       },
+      "balance":{
+         "type":"number",
+         "min":0,
+         "max":999999999999999,
+         "maxlength":15,
+         "readonly":""
+      },
       "safekeepingAccount":{
          "type":"text",
          "minlength":8,
