@@ -3,36 +3,31 @@
 
 using namespace std;
 using namespace string_literals;
-constexpr auto eof = static_cast<char>(char_traits<char>::eof());
+
+auto file(string_view name)
+{
+    constexpr auto eof = static_cast<char>(char_traits<char>::eof());
+    auto file = ifstream{string{name}};
+    auto content = ""s;
+    getline(file, content, eof);
+    return content;
+}
 
 int main(int argc, char const **argv)
 {
-    auto file = ifstream{};
     auto server = http::server{};
 
-    file.open("html/u2a.html");
-    auto html = ""s;
-    getline(file, html, eof);
-    file.close();
+    const auto html = file("html/u2a.html");
     server.get("/").response(html);
     server.get("/index.html").response(html);
 
-    file.open("css/u2a.css");
-    auto css = ""s;
-    getline(file, css, eof);
-    file.close();
+    const auto css = file("css/u2a.css");
     server.get("/u2a.css").response(css);
 
-    file.open("js/u2a.js");
-    auto js = ""s;
-    getline(file, js, eof);
-    file.close();
+    const auto js = file("js/u2a.js");
     server.get("/u2a.js").response(js);
 
-    file.open("json/models.json");
-    auto json = ""s;
-    getline(file, json, eof);
-    file.close();
+    const auto json = file("json/models.json");
     server.get("/models.json").response(json);
 
     server.listen("8080");
