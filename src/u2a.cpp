@@ -7,7 +7,7 @@ using namespace string_literals;
 auto file(string_view name)
 {
     constexpr auto eof = static_cast<char>(char_traits<char>::eof());
-    auto file = ifstream{string{name}};
+    auto file = ifstream{name.data()};
     auto content = ""s;
     getline(file, content, eof);
     return content;

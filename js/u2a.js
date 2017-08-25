@@ -207,7 +207,9 @@ $(document).ready(function () {
     function constructFields(fieldset) {
         var data = {}
         $(fieldset).children("[name]").each(function(index, element) {
-            if($(element).attr("type") == "number")
+            if($(element).attr("step") == "0.01")
+                data[element.name] = parseFloat($(element).val(), 10)
+            else if($(element).attr("step") == "1")
                 data[element.name] = parseInt($(element).val(), 10)
             else if ($(element).val() != "")
                 data[element.name] = $(element).val()

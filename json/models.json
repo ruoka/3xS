@@ -1,4 +1,73 @@
 {
+   "orders":{
+      "UID":{
+         "type":"text",
+         "minlength":1,
+         "maxlength":16,
+         "required":""
+      },
+      "side":{
+        "select":[
+            "BUYI",
+            "SELL"
+        ],
+         "required":""
+      },
+      "type":{
+        "select":[
+            "LMTO",
+            "MRKT",
+            "ALNO"
+        ],
+         "required":""
+      },
+      "isin":{
+         "type":"text",
+         "minlength":12,
+         "maxlength":12,
+         "required":""
+      },
+      "placeOfTrade":{
+         "select":[
+            "VARI",
+            "XHEL",
+            "XSTO",
+            "BURG",
+            "XLON",
+            "CHIX",
+            "XOTC"
+        ],
+         "required":""
+      },
+      "quantity":{
+         "type":"number",
+         "min":0,
+         "max":999999999999999,
+         "step":"1",
+         "required":""
+      },
+      "price":{
+         "type":"number",
+         "min":0,
+         "max":999999999999999,
+         "step":"0.01",
+         "required":""
+      },
+      "currency":{
+         "select":[
+            "EUR",
+            "SEK",
+            "DKK",
+            "NOK",
+            "USD"
+         ],
+         "required":""
+     },
+     "orderExpiryDate":{
+        "type":"date",
+        "required":""
+     }
+   },
    "trades":{
       "UID":{
          "type":"text",
@@ -14,13 +83,13 @@
       },
       "placeOfTrade":{
          "select":[
+            "XOTC",
             "XHEL",
             "XSTO",
             "BURG",
             "XLON",
             "CHIX",
             "XOFF",
-            "XOTC",
             "XXXX",
             "VARI"
          ],
@@ -30,14 +99,14 @@
          "type":"number",
          "min":0,
          "max":999999999999999,
-         "step":"any",
+         "step":"1",
          "required":""
       },
-      "amount":{
+      "price":{
          "type":"number",
          "min":0,
          "max":999999999999999,
-         "step":"any",
+         "step":"0.01",
          "required":""
       },
       "currency":{
@@ -219,7 +288,7 @@
          "type":"number",
          "min":0,
          "max":999999999999999,
-         "step":"any",
+         "step":"1",
          "maxlength":15,
          "required":""
       },
@@ -305,7 +374,7 @@
          "type":"number",
          "min":0,
          "max":999999999999999,
-         "step":"any",
+         "step":"1",
          "maxlength":15,
          "required":""
       },
@@ -426,7 +495,7 @@
          "type":"number",
          "min":0,
          "max":999999999999999,
-         "step":"any",
+         "step":"1",
          "maxlength":15,
          "required":""
       },
