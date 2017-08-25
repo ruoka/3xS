@@ -35,8 +35,6 @@ int main(int argc, char const **argv)
     file.close();
     server.get("/models.json").response(json);
 
-    server.post("/").response("");
-
     server.listen("8080");
     return 0;
 }
