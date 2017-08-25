@@ -181,7 +181,7 @@ $(document).ready(function () {
                     $.each(fields.select, function(index, value) {
                         fieldset += "<option value ='" + value + "'>"
                         fieldset += value
-                        fieldset += "</optaion>"
+                        fieldset += "</option>"
                     })
                     fieldset += "</select>"
                     fieldset += "<br/>"
