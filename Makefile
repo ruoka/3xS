@@ -1,12 +1,12 @@
-CXX = /usr/local/bin/clang
+CXX = clang
 
-CXXFLAGS =  -nostdinc++ -I/usr/local/include/c++/v1 -IYarDB/include -std=c++1z
+CXXFLAGS = -IYarDB/include -std=c++17
 
 SRCDIR = src
 
 BINDIR = bin
 
-LDFLAGS = -nostdlib -L/usr/lib -L/usr/local/lib -lSystem -lc++ ./YarDB/lib/libyardb.a
+LDFLAGS = -lSystem -lc++ ./YarDB/lib/libyardb.a
 
 TARGETS = $(addprefix $(BINDIR)/, u2a)
 
