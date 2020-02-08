@@ -15,20 +15,21 @@ auto file(string_view name)
 
 int main(int argc, char const **argv)
 {
+    net::slog.redirect(std::clog);
+
     auto server = http::server{};
 
-    const auto html = file("html/u2a.html");
-    server.get("/").response(html);
-    server.get("/index.html").response(html);
+    const auto model = file("json/model.json");
+    server.get("/model.json").json(model);
 
-    const auto css = file("css/u2a.css");
-    server.get("/u2a.css").response(css);
+    const auto view = file("html/view.html");
+    server.get("/").html(view);
 
-    const auto js = file("js/u2a.js");
-    server.get("/u2a.js").response(js);
+    const auto controller = file("js/controller.js");
+    server.get("/controller.js").script(controller);
 
-    const auto json = file("json/models.json");
-    server.get("/models.json").response(json);
+    const auto style = file("css/view.css");
+    server.get("/view.css").css(style);
 
     server.listen("8080");
     return 0;
