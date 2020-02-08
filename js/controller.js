@@ -50,7 +50,7 @@ $(document).ready(function () {
                 alert("Success")
                 $.ajax({
                     type: "GET",
-                    url: "models.json",
+                    url: "model.json",
                     dataType: "json",
                     contentType: "application/json",
                     success: function(data) {
