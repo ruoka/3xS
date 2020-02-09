@@ -16,12 +16,12 @@ $(BINDIR)/%: $(SRCDIR)/%.cpp
 
 .PHONY: all
 all: modules $(TARGETS)
+	@cp YarDB/bin/yardb bin/yardb
 
 .PHONY: modules
 modules:
 	$(MAKE) -C googletest/googletest/make all
 	$(MAKE) -C YarDB bin lib
-	@cp YarDB/bin/yardb bin/yardb
 
 .PHONY: clean
 clean:
