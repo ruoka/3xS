@@ -21,6 +21,7 @@ all: modules $(TARGETS)
 modules:
 	$(MAKE) -C googletest/googletest/make all
 	$(MAKE) -C YarDB bin lib
+	@cp YarDB/bin/yardb bin/yardb
 
 .PHONY: clean
 clean:
