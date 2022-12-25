@@ -13,11 +13,14 @@ auto file(string_view name)
     return content;
 }
 
-int main(int argc, char const **argv)
+int main([[maybe_unused]]int argc, [[maybe_unused]]char const **argv)
 {
     net::slog.redirect(std::clog);
 
     auto server = http::server{};
+
+    //foo:bar
+    //server.credentials({"Basic Zm9vOmJhcg=="});
 
     const auto model = file("json/model.json");
     server.get("/model.json").json(model);

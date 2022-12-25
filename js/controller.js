@@ -123,10 +123,10 @@ $(document).ready(function () {
         $(this).css("background", "lime")
         $(this).addClass("active")
         var name = $("aside nav div.active").attr("id")
-        // alert(name)
+        alert(name)
         $.ajax({
             type: "GET",
-            url: "http://localhost:2112/" + name + "?desc",
+            url: "http://localhost:2112/" + name + "?$desc",
             dataType: "json",
             contentType: "application/json",
             success: function(data) {

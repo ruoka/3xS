@@ -1,6 +1,3 @@
 [submodule "YarDB"]
 	path = YarDB
 	url = https://github.com/ruoka/YarDB.git
-[submodule "googletest"]
-	path = googletest
-	url = https://github.com/ruoka/googletest.git
