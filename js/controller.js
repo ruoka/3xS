@@ -1,9 +1,3 @@
-// https://tobiasahlin.com/blog/move-from-jquery-to-vanilla-javascript/
-// https://www.jamesbaum.co.uk/blether/vanilla-js-equivalent-jquery-find-parent-data-remove-class-empty-append/
-// https://javascript.info/onload-ondomcontentloaded
-// https://www.w3schools.com/jsref/met_element_getelementsbytagname.asp
-// https://stackoverflow.com/questions/18247289/what-is-the-difference-between-queryselectorall-and-getelementsbytagname
-
 let models = {}
 
 fetch("model.json", {
