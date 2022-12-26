@@ -26,7 +26,7 @@ BINDIR = bin
 TARGETS = $(addprefix $(BINDIR)/, u2a)
 LIBRARIES = ./YarDB/lib/libyardb.a ./YarDB/lib/libnet4cpp.a
 
-$(BINDIR)/%: $(SRCDIR)/%.cpp $(LIBRARIES)
+$(BINDIR)/%: $(SRCDIR)/%.cpp
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(@:$(BINDIR)/%=$(SRCDIR)/%.cpp) $(OBJECTS) -o $@
 
@@ -34,16 +34,11 @@ YarDB/lib/%.a:
 	$(MAKE) -C YarDB lib bin
 
 .PHONY: all
-all: $(TARGETS)
+all: $(LIBRARIES) $(TARGETS)
 	@cp YarDB/bin/yardb bin/yardb
-
-.PHONY: modules
-modules:
-	$(MAKE) -C googletest/googletest/make all
 
 .PHONY: clean
 clean:
-	$(MAKE) -C googletest/googletest/make clean
 	$(MAKE) -C YarDB clean
 	@rm -rf $(BINDIR)
 
