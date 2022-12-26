@@ -1,3 +1,5 @@
+const yardb = "http://localhost:2112/"
+
 let models = {}
 
 fetch("model.json", {
@@ -13,7 +15,7 @@ window.onload = () => {
 
     const one = tagname => document.querySelector(tagname)
 
-    const all = (tagname,callback) => {
+    const all = (tagname, callback) => {
         const elements = document.querySelectorAll(tagname)
         for(const element of elements) {
             callback(element)
@@ -24,7 +26,7 @@ window.onload = () => {
         const elements = node.parentElement.children;
         for(const element of elements) {
             if(!element.isSameNode(node))
-                callback(element)
+            callback(element)
         }
     }
 
@@ -62,13 +64,13 @@ window.onload = () => {
         const password = one("#password").value
         const data = {username: username, timestamp: date.toISOString}
 
-        fetch("http://localhost:2112/logins", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Basic " + btoa(username + ":" + password)
-          },
-          body: JSON.stringify(data),
+        fetch(yardb + "logins", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Basic " + btoa(username + ":" + password)
+            },
+            body: JSON.stringify(data),
         })
         .then(response => response.json())
         .then(data => {
@@ -77,10 +79,10 @@ window.onload = () => {
             one("main form").style.display = "none"
             one("main article").style.display = "block"
             all("aside nav div", element => element.style.color = "lime")
-         })
-         .catch(error => {
+        })
+        .catch(error => {
             alert("Login failed: ", error);
-         });
+        });
     }
 
     all("nav div", element => element.onmouseover = event => {
@@ -159,12 +161,12 @@ window.onload = () => {
         const div = one("#article")
         while(div.firstChild) div.removeChild(div.firstChild)
 
-        fetch("http://localhost:2112/" + name + "?$desc", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Basic " + btoa(username + ":" + password)
-          },
+        fetch(yardb + name + "?$desc", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Basic " + btoa(username + ":" + password)
+            },
         })
         .then(response => response.json())
         .then(data => {
@@ -183,20 +185,20 @@ window.onload = () => {
         alert(JSON.stringify(data))
 
         fetch(event.target.getAttribute("action"), {
-          method: event.target.getAttribute("method"),
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Basic " + btoa(username + ":" + password)
-          },
-          body: JSON.stringify(data),
+            method: event.target.getAttribute("method"),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Basic " + btoa(username + ":" + password)
+            },
+            body: JSON.stringify(data),
         })
         .then(response => response.json())
         .then(data => {
             alert("Post succeeded: " + JSON.stringify(data))
-         })
-         .catch(error => {
+        })
+        .catch(error => {
             alert("Post failed: ", error);
-         });
+        });
     }
 
     const renderFieldset = (set, fields, legend) => {
@@ -204,7 +206,7 @@ window.onload = () => {
         let fieldset = "<fieldset name=" + set + ">"
 
         if (legend === true)
-           fieldset += "<legend>" + set + "</legend>"
+        fieldset += "<legend>" + set + "</legend>"
 
         for(const [name, attibutes] of Object.entries(fields)) {
             if (!("readonly" in attibutes)) {
@@ -240,7 +242,7 @@ window.onload = () => {
     const renderForm = () => {
         const name = one("aside nav div.active").getAttribute("id")
         alert(JSON.stringify(models[name]))
-        let form = "<form action='http://localhost:2112/" + name + "' method='post'>"
+        let form = "<form action='" + yardb + name + "' method='post'>"
         form += renderFieldset(name, models[name], false)
         form += "<input id='submit' type='submit' value='Submit'>"
         form += "</form>"
@@ -251,11 +253,11 @@ window.onload = () => {
         let data = {}
         for(const element of fieldset.querySelectorAll("[name]")) {
             if(element.getAttribute("step") == "0.01")
-                data[element.name] = parseFloat(element.value, 10)
+            data[element.name] = parseFloat(element.value, 10)
             else if(element.getAttribute("step") == "1")
-                data[element.name] = parseInt(element.value, 10)
+            data[element.name] = parseInt(element.value, 10)
             else if (element.value != "")
-                data[element.name] = element.value
+            data[element.name] = element.value
             else {
                 data[element.name] = null
             }
