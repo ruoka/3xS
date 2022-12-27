@@ -1,4 +1,6 @@
 const yardb = "http://localhost:2112/"
+var username = ""
+var password = ""
 
 const model = {
 
@@ -15,7 +17,7 @@ const model = {
         .catch(error => alert("Failed to load the model: ", error))
     },
 
-    renderForm(name) {
+    form(name) {
 
         const renderFieldset = (set, fields, legend) => {
 
@@ -63,49 +65,85 @@ const model = {
         return form
     },
 
-    constructObject() {
-        const fieldset = document.querySelector("fieldset");
-        let data = {}
-        for(const element of fieldset.querySelectorAll("[name]")) {
-            if(element.getAttribute("step") == "0.01")
-            data[element.name] = parseFloat(element.value, 10)
-            else if(element.getAttribute("step") == "1")
-            data[element.name] = parseInt(element.value, 10)
-            else if (element.value != "")
-            data[element.name] = element.value
-            else {
-                data[element.name] = null
+    create() {
+
+        const constructObject = (fieldset) => {
+            let data = {};
+            for(const element of fieldset.querySelectorAll("[name]")) {
+                if(element.getAttribute("step") == "0.01")
+                data[element.name] = parseFloat(element.value, 10)
+                else if(element.getAttribute("step") == "1")
+                data[element.name] = parseInt(element.value, 10)
+                else if (element.value != "")
+                data[element.name] = element.value
+                else {
+                    data[element.name] = null
+                }
             }
+            for(const element of fieldset.querySelectorAll("fieldset[name]")) {
+                data[element.name] = constructObject(element)
+            }
+            return data;
         }
-        for(const element of fieldset.querySelectorAll("fieldset[name]")) {
-            data[element.name] = constructObject(element)
-        }
-        for(const field of fieldset.children) (
-            field.disabled = true
-        )
-        fieldset.parentElement.querySelector("#submit").style.display = "none"
+
+        const fieldset = document.querySelector("fieldset[name]");
+        let data = constructObject(fieldset);
+
         alert(JSON.stringify(data))
-        return data;
+
+        fetch(yardb + fieldset.getAttribute("name"), {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Basic " + btoa(username + ":" + password)
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Post succeeded: " + JSON.stringify(data))
+            for(const field of fieldset.children) (
+                field.disabled = true
+            )
+            fieldset.parentElement.querySelector("#submit").style.display = "none"
+        })
+        .catch(error => {
+            alert("Post failed: ", error);
+        });
     },
 
-    renderTable(name, data) {
-        alert(JSON.stringify(data))
-        const model = models[name]
-        let table = "<table>"
-        table += "<tr>"
-        for(const [name, value] of Object.entries(model)) {
-            table += "<th>" + name + "</th>"
-        }
-        table += "</tr>"
-        for(const [index, document] of Object.entries(data)) {
+    read(name) {
+
+        return fetch(yardb + name + "?$desc", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Basic " + btoa(username + ":" + password)
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(JSON.stringify(data))
+
+            const model = models[name]
+
+            let table = "<table>"
             table += "<tr>"
             for(const [name, value] of Object.entries(model)) {
-                table += "<td>" + document[name] + "</td>"
+                table += "<th>" + name + "</th>"
             }
             table += "</tr>"
-        }
-        table += "</table>"
-        return table
+            for(const [index, document] of Object.entries(data)) {
+                table += "<tr>"
+                for(const [name, value] of Object.entries(model)) {
+                    table += "<td>" + document[name] + "</td>"
+                }
+                table += "</tr>"
+            }
+            table += "</table>"
+            return table
+        })
+        .catch(error => alert("Failed to load the data: ", error))
     }
 }
 
@@ -130,12 +168,6 @@ window.onload = () => {
         }
     }
 
-    const reset = (content) => {
-        const div = one("#article")
-        while(div.firstChild) div.removeChild(div.firstChild)
-        one("#article").innerHTML = content
-    }
-
     const clock = () => {
         const date = new Date()
         const zone = -1 * date.getTimezoneOffset() / 60
@@ -146,9 +178,6 @@ window.onload = () => {
 
     clock()
 
-    var username = ""
-    var password = ""
-
     if (username == "" || password == "") {
         one("aside nav").style.display = "none"
         one("main form").style.display = "block"
@@ -158,6 +187,12 @@ window.onload = () => {
         one("aside nav").style.display = "block"
         one("main form").style.display = "none"
         one("main article").style.display = "block"
+    }
+
+    const render = (content) => {
+        const div = one("#article")
+        while(div.firstChild) div.removeChild(div.firstChild)
+        one("#article").innerHTML = content
     }
 
     all("main header nav", element => element.style.display = "none")
@@ -225,7 +260,7 @@ window.onload = () => {
         })
         all("main header nav", element => element.style.display = "none")
         all("main header nav." + event.target.getAttribute("id"), element => element.style.display = "block")
-        reset("")
+        render("")
     })
 
     all("main header nav div.post", element => element.onclick = event => {
@@ -238,7 +273,7 @@ window.onload = () => {
         event.target.style.color = "black"
         event.target.style.backgroundColor = "lime"
         const name = one("aside nav div.active").getAttribute("id")
-        reset(model.renderForm(name))
+        render(model.form(name))
     })
 
     all("main header nav div.get", element => element.onclick = event => {
@@ -252,39 +287,11 @@ window.onload = () => {
         event.target.style.color = "black"
         event.target.style.backgroundColor = "lime"
         const name = one("aside nav div.active").getAttribute("id")
-        fetch(yardb + name + "?$desc", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa(username + ":" + password)
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            reset(model.renderTable(name, data))
-        })
-        .catch(error => alert("Failed to load the data: ", error))
+        model.read(name).then(content => render(content))
     })
 
     one("main article").onsubmit = event => {
         event.preventDefault()
-
-        const data = model.constructObject()
-
-        fetch(event.target.getAttribute("action"), {
-            method: event.target.getAttribute("method"),
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa(username + ":" + password)
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert("Post succeeded: " + JSON.stringify(data))
-        })
-        .catch(error => {
-            alert("Post failed: ", error);
-        });
+        model.create()
     }
 }
