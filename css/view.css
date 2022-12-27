@@ -1,135 +1,152 @@
 body {
-  display: flex;
-  min-height: 95vh;
-  background: black;
-  color: lime;
-  font-family: "Comic Sans", "Comic Sans MS", cursive;
-  padding-right: 30px;
-  padding-left: 30px;
+    display: flex;
+    min-height: 95vh;
+    background: black;
+    color: lime;
+    font-family: "Comic Sans", "Comic Sans MS", cursive;
+    padding-right: 30px;
+    padding-left: 30px;
 }
 aside {
-  display: flex;
-  flex-flow: column;
-  flex: none;
+    display: flex;
+    flex-flow: column;
+    flex: none;
 }
 aside header {
-  display: flex;
-  flex: none;
-  height: 90px;
+    display: flex;
+    flex: none;
+    height: 90px;
 }
 aside header h2 {
-  font-size: 40px;
-  font-weight: bold;
-  margin: auto;
+    font-size: 40px;
+    font-weight: bold;
+    margin: auto;
 }
 div.active {
-  color: black;
-  background-color: lime;
+    color: black;
+    background-color: lime;
 }
 nav div.active:hover {
-  background-color: green;
+    background-color: green;
 }
 nav :not(div.active):hover {
-  color: black;
-  background-color: green;
+    color: black;
+    background-color: green;
 }
 aside nav {
-  padding-top: 10px;
-  cursor: pointer;
+    padding-top: 10px;
+    cursor: pointer;
 }
 aside nav div {
-  width: 100px;
-  margin-bottom: 20px;
-  text-align: left;
+    width: 100px;
+    margin-bottom: 20px;
+    text-align: left;
 }
 main {
-  display: flex;
-  flex-flow: column;
-  flex: 1 1 auto;
+    display: flex;
+    flex-flow: column;
+    flex: 1 1 auto;
 }
 main header {
-  display: flex;
-  flex-flow: row nowrap;
-  flex: none;
-  height: 90px;
+    display: flex;
+    flex-flow: row nowrap;
+    flex: none;
+    height: 90px;
 }
 main header div {
-  width: 300px;
-  margin: auto 0 auto auto;
-  text-align: right;
+    width: 300px;
+    margin: auto 0 auto auto;
+    text-align: right;
 }
 main nav {
-  display: flex;
-  justify-content: flex-start;
-  margin: auto auto auto 0;
-  cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    margin: auto auto auto 0;
+    cursor: pointer;
 }
 main nav div {
-  display: inline-block;
-  width: 100px;
-  margin-right: 20px;
-  text-align: center;
+    display: inline-block;
+    width: 100px;
+    margin-right: 20px;
+    text-align: center;
 }
 
 main form {
-  padding-top: 10px;
-  height: 80vh;
-  max-width: 85vw;
-  overflow:scroll;
+    padding-top: 10px;
+    height: 80vh;
+    max-width: 85vw;
+    overflow:scroll;
 }
 main form label {
-  display: inline-block;
-  width: 80px;
+    display: inline-block;
+    width: 80px;
 }
 main article {
-  padding-top: 10px;
-  height: 80vh;
-  max-width: 85vw;
-  overflow:scroll;
-  font-size: 15px;
+    padding-top: 10px;
+    height: 80vh;
+    max-width: 85vw;
+    overflow:scroll;
+    font-size: 15px;
 }
 main article label {
-  display: inline-block;
-  width: 200px;
+    display: inline-block;
+    width: 200px;
 }
 main article form fieldset {
-  padding-top:10px;
-  border:1px solid lime;
-  border-radius:8px;
-  box-shadow:0 0 10px #666;
+    padding-top:10px;
+    border:1px solid lime;
+    border-radius:8px;
+    box-shadow:0 0 10px #666;
 }
 main article form fieldset[disabled] select {
-  background-color:white;
-}
-main article article table {
-  border-spacing: 0;
-  border-collapse: separate;
-  border-radius: 10px;
-  border: 1px solid lime;
-}
-main article table th, td {
-  border: 1px solid lime;
+    background-color:white;
 }
 input[type=button], input[type=submit], input[type=reset] {
-  background-color: lime;
-  border: none;
-  color: black;
-  font-family: "Comic Sans", "Comic Sans MS", cursive;
-  cursor: pointer;
+    background-color: lime;
+    border: none;
+    color: black;
+    font-family: "Comic Sans", "Comic Sans MS", cursive;
+    cursor: pointer;
 }
 [maxlength="10"] {
-  width: 17ch;
+    width: 17ch;
 }
 [maxlength="11"], [maxlength="12"] {
-  width: 12ch;
+    width: 12ch;
 }
 [maxlength="15"], [maxlength="16"] {
-  width: 17ch;
+    width: 17ch;
 }
 [maxlength="35"] {
-  width: 36ch;
+    width: 36ch;
 }
 main footer {
-  padding-top: 15px;
-  text-align: center;
+    padding-top: 15px;
+    text-align: center;
+}
+/* credits https://unused-css.com/blog/css-rounded-table-corners/ */
+table.rounded-corners {
+    border-spacing: 0;
+    border-collapse: separate;
+    border-radius: 10px;
+    border: 1px solid lime;
+}
+/* Apply a border to the right of all but the last column */
+table.rounded-corners th:not(:last-child),
+table.rounded-corners td:not(:last-child) {
+    border-right: 1px solid lime;
+}
+/* Apply a border to the bottom of all but the last row */
+table.rounded-corners>thead>tr:not(:last-child)>th,
+table.rounded-corners>thead>tr:not(:last-child)>td,
+table.rounded-corners>tbody>tr:not(:last-child)>th,
+table.rounded-corners>tbody>tr:not(:last-child)>td,
+table.rounded-corners>tfoot>tr:not(:last-child)>th,
+table.rounded-corners>tfoot>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>th,
+table.rounded-corners>thead:not(:last-child),
+table.rounded-corners>tbody:not(:last-child),
+table.rounded-corners>tfoot:not(:last-child) {
+    border-bottom: 1px solid lime;
 }

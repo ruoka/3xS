@@ -160,7 +160,7 @@ export let model = {
 
             const model = models[name]
 
-            let table = "<table>"
+            let table = "<table class='rounded-corners'>"
             table += "<tr>"
             table += renderHeader(model,"")
             table += "</tr>"
