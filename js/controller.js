@@ -1,12 +1,11 @@
-//import {test as xxx} from "./model.js"
+"use strict";
+import {yardb} from "./configuration.js"
 
-const yardb = "http://localhost:2112/"
-var username = ""
-var password = ""
+let models = {}
+let username = ""
+let password = ""
 
-const model = {
-
-    models: [],
+var model = {
 
     setup() {
         fetch("model.json", {
@@ -15,7 +14,7 @@ const model = {
             }
         })
         .then(response => response.json())
-        .then(data => models = data)
+        .then(json => models = json)
         .catch(error => alert("Failed to load the model: ", error))
     },
 
