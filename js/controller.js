@@ -1,3 +1,5 @@
+//import {test as xxx} from "./model.js"
+
 const yardb = "http://localhost:2112/"
 var username = ""
 var password = ""
@@ -18,98 +20,105 @@ const model = {
     },
 
     form(name) {
+        return new Promise(async (resolve, reject) => {
 
-        const renderFieldset = (set, fields, legend) => {
+            const renderFieldset = (set, fields, legend) => {
 
-            let fieldset = "<fieldset name=" + set + ">"
+                let fieldset = "<fieldset name=" + set + ">"
 
-            if (legend === true)
-                fieldset += "<legend>" + set + "</legend>"
+                if (legend === true)
+                    fieldset += "<legend>" + set + "</legend>"
 
-            for(const [name, attibutes] of Object.entries(fields)) {
-                if (!("readonly" in attibutes)) {
-                    if ("type" in attibutes) {
-                        fieldset += "<label>" + name + "</label>"
-                        fieldset += "<input name = '" + name + "' "
-                        for(const [attribute, value] of Object.entries(attibutes)) {
-                            fieldset += attribute + "='" + value + "' "
+                for(const [name, attibutes] of Object.entries(fields)) {
+                    if (!("readonly" in attibutes)) {
+                        if ("type" in attibutes) {
+                            fieldset += "<label>" + name + "</label>"
+                            fieldset += "<input name = '" + name + "' "
+                            for(const [attribute, value] of Object.entries(attibutes)) {
+                                fieldset += attribute + "='" + value + "' "
+                            }
+                            fieldset += ">"
+                            fieldset += "<br/>"
+                        } else if ("select" in attibutes) {
+                            fieldset += "<label>" + name + "</label>"
+                            fieldset += "<select name = '" + name + "'>"
+                            for(const [index, value] of Object.entries(attibutes.select)) {
+                                fieldset += "<option value ='" + value + "'>"
+                                fieldset += value
+                                fieldset += "</option>"
+                            }
+                            fieldset += "</select>"
+                            fieldset += "<br/>"
+                        } else {
+                            fieldset += ""
+                            fieldset += renderFieldset(name, attibutes, true)
                         }
-                        fieldset += ">"
-                        fieldset += "<br/>"
-                    } else if ("select" in attibutes) {
-                        fieldset += "<label>" + name + "</label>"
-                        fieldset += "<select name = '" + name + "'>"
-                        for(const [index, value] of Object.entries(attibutes.select)) {
-                            fieldset += "<option value ='" + value + "'>"
-                            fieldset += value
-                            fieldset += "</option>"
-                        }
-                        fieldset += "</select>"
-                        fieldset += "<br/>"
-                    } else {
-                        fieldset += ""
-                        fieldset += renderFieldset(name, attibutes, true)
                     }
                 }
+
+                fieldset += "</fieldset>"
+                return fieldset
             }
 
-            fieldset += "</fieldset>"
-            return fieldset
-        }
-
-        const model = models[name]
-        let form = "<form action='" + yardb + name + "' method='post'>"
-        form += renderFieldset(name, model, false)
-        form += "<input id='submit' type='submit' value='Submit'>"
-        form += "</form>"
-        return form
+            const model = models[name]
+            let form = "<form action='" + yardb + name + "' method='post'>"
+            form += renderFieldset(name, model, false)
+            form += "<input id='submit' type='submit' value='Submit'>"
+            form += "</form>"
+            resolve(form)
+        })
     },
 
     create() {
+        return new Promise(async (resolve, reject) => {
 
-        const constructObject = (fieldset) => {
-            let data = {};
-            for(const element of fieldset.querySelectorAll("[name]")) {
-                if(element.getAttribute("step") == "0.01")
-                data[element.name] = parseFloat(element.value, 10)
-                else if(element.getAttribute("step") == "1")
-                data[element.name] = parseInt(element.value, 10)
-                else if (element.value != "")
-                data[element.name] = element.value
-                else {
-                    data[element.name] = null
+            const constructObject = (fieldset) => {
+                let data = {};
+                for(const element of fieldset.querySelectorAll("[name]")) {
+                    if(element.getAttribute("step") == "0.01")
+                    data[element.name] = parseFloat(element.value, 10)
+                    else if(element.getAttribute("step") == "1")
+                    data[element.name] = parseInt(element.value, 10)
+                    else if (element.value != "")
+                    data[element.name] = element.value
+                    else {
+                        data[element.name] = null
+                    }
                 }
+                for(const element of fieldset.querySelectorAll("fieldset[name]")) {
+                    data[element.name] = constructObject(element)
+                }
+                return data;
             }
-            for(const element of fieldset.querySelectorAll("fieldset[name]")) {
-                data[element.name] = constructObject(element)
-            }
-            return data;
-        }
 
-        const fieldset = document.querySelector("fieldset[name]");
-        let data = constructObject(fieldset);
+            const fieldset = document.querySelector("fieldset[name]");
+            const form = fieldset.parentElement;
+            let data = constructObject(fieldset);
 
-        alert(JSON.stringify(data))
+            alert(JSON.stringify(data))
 
-        fetch(yardb + fieldset.getAttribute("name"), {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Basic " + btoa(username + ":" + password)
-            },
-            body: JSON.stringify(data),
+            const text = await fetch(yardb + fieldset.getAttribute("name"), {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Basic " + btoa(username + ":" + password)
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("Post succeeded: " + JSON.stringify(data))
+                for(const field of fieldset.children) (
+                    field.disabled = true
+                )
+                form.querySelector("#submit").style.display = "none"
+                return form.innerHTML.slice();
+            })
+            .catch(error => {
+                alert("Post failed: ", error);
+            })
+            resolve(text)
         })
-        .then(response => response.json())
-        .then(data => {
-            alert("Post succeeded: " + JSON.stringify(data))
-            for(const field of fieldset.children) (
-                field.disabled = true
-            )
-            fieldset.parentElement.querySelector("#submit").style.display = "none"
-        })
-        .catch(error => {
-            alert("Post failed: ", error);
-        });
     },
 
     read(name) {
@@ -273,7 +282,7 @@ window.onload = () => {
         event.target.style.color = "black"
         event.target.style.backgroundColor = "lime"
         const name = one("aside nav div.active").getAttribute("id")
-        render(model.form(name))
+        model.form(name).then(render)
     })
 
     all("main header nav div.get", element => element.onclick = event => {
@@ -287,11 +296,11 @@ window.onload = () => {
         event.target.style.color = "black"
         event.target.style.backgroundColor = "lime"
         const name = one("aside nav div.active").getAttribute("id")
-        model.read(name).then(content => render(content))
+        model.read(name).then(render)
     })
 
     one("main article").onsubmit = event => {
         event.preventDefault()
-        model.create()
+        model.create().then(render)
     }
 }

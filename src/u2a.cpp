@@ -22,11 +22,14 @@ int main([[maybe_unused]]int argc, [[maybe_unused]]char const **argv)
     //foo:bar
     //server.credentials({"Basic Zm9vOmJhcg=="});
 
-    const auto model = file("json/model.json");
-    server.get("/model.json").json(model);
+    const auto json = file("json/model.json");
+    server.get("/model.json").json(json);
 
     const auto view = file("html/view.html");
     server.get("/").html(view);
+
+    const auto model = file("js/model.js");
+    server.get("/model.js").script(model);
 
     const auto controller = file("js/controller.js");
     server.get("/controller.js").script(controller);
