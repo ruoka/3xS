@@ -22,13 +22,16 @@ aside header h2 {
   font-weight: bold;
   margin: auto;
 }
-.active {
+div.active {
   color: black;
   background-color: lime;
 }
-.inactive {
-  color: lime;
-  background-color: black;
+nav div.active:hover {
+  background-color: green;
+}
+nav :not(div.active):hover {
+  color: black;
+  background-color: green;
 }
 aside nav {
   padding-top: 10px;
@@ -67,6 +70,7 @@ main nav div {
   margin-right: 20px;
   text-align: center;
 }
+
 main form {
   padding-top: 10px;
   height: 80vh;
@@ -97,18 +101,14 @@ main article form fieldset {
 main article form fieldset[disabled] select {
   background-color:white;
 }
-main article table {
-  table-layout: auto;
-}
-main article table th {
-  text-align: left;
-}
-main article table td {
-  white-space:nowrap;
-}
-table, th, td {
+main article article table {
+  border-spacing: 0;
+  border-collapse: separate;
+  border-radius: 10px;
   border: 1px solid lime;
-  border-collapse: collapse;
+}
+main article table th, td {
+  border: 1px solid lime;
 }
 input[type=button], input[type=submit], input[type=reset] {
   background-color: lime;
