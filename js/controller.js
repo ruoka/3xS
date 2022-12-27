@@ -78,31 +78,13 @@ window.onload = () => {
         });
     }
 
-    all("nav div", element => element.onmouseover = event => {
-        if (event.target.classList.contains("active")) {
-            event.target.style.backgroundColor = "green"
-        } else {
-            event.target.style.color = "black"
-            event.target.style.backgroundColor = "lime"
-        }
-    })
-
-    all("nav div", element => element.onmouseleave = event => {
-        if (event.target.classList.contains("active")) {
-            event.target.style.backgroundColor = "lime"
-        } else {
-            event.target.style.color = "lime"
-            event.target.style.backgroundColor = "black"
-        }
-    })
-
     all("aside nav div", element => element.onclick = event => {
         siblings(event.target, element => {
-            element.classList.replace("active","inactive")
+            element.classList.remove("active")
         })
         event.target.classList.add("active")
         all("main nav div", element => {
-            element.classList.replace("active","inactive")
+            element.classList.remove("active")
         })
         all("main nav", element => element.style.display = "none")
         all("main nav." + event.target.getAttribute("id"), element => element.style.display = "block")
@@ -111,7 +93,7 @@ window.onload = () => {
 
     all("main nav div.post", element => element.onclick = event => {
         siblings(event.target, element => {
-            element.classList.replace("active","inactive")
+            element.classList.remove("active")
         })
         event.target.classList.add("active")
         const name = one("aside nav div.active").getAttribute("id")
@@ -121,7 +103,7 @@ window.onload = () => {
     all("main nav div.get", element => element.onclick = event => {
         event.preventDefault()
         siblings(event.target, element => {
-            element.classList.replace("active","inactive")
+            element.classList.remove("active")
         })
         event.target.classList.add("active")
         const name = one("aside nav div.active").getAttribute("id")
