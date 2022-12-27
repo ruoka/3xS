@@ -131,19 +131,42 @@ export let model = {
         .then(data => {
             alert(JSON.stringify(data))
 
+            const renderHeader = (fields, parent) => {
+                let header = ""
+                for(const [name, attibutes] of Object.entries(fields)) {
+                    if ("type" in attibutes || "select" in attibutes) {
+                        header += "<th>" + parent + name + "</th>"
+                    } else if (parent === "") {
+                        header += renderHeader(attibutes, name + ".")
+                    }
+                    else {
+                        header += renderHeader(attibutes, parent + name + ".")
+                    }
+                }
+                return header
+            }
+
+            const renderRow = (model, document) => {
+                let row = ""
+                for(const [name, attibutes] of Object.entries(model)) {
+                    if ("type" in attibutes || "select" in attibutes) {
+                        row += "<td>" + document[name] + "</td>"
+                    } else {
+                        row += renderRow(attibutes, document[name])
+                    }
+                }
+                return row
+            }
+
             const model = models[name]
 
             let table = "<table>"
             table += "<tr>"
-            for(const [name, value] of Object.entries(model)) {
-                table += "<th>" + name + "</th>"
-            }
+            table += renderHeader(model,"")
             table += "</tr>"
             for(const [index, document] of Object.entries(data)) {
                 table += "<tr>"
-                for(const [name, value] of Object.entries(model)) {
-                    table += "<td>" + document[name] + "</td>"
-                }
+                table += renderRow(model, document)
                 table += "</tr>"
             }
             table += "</table>"

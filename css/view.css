@@ -29,6 +29,7 @@ section aside header h2 {
 }
 section aside nav {
   padding-top: 10px;
+  cursor: pointer;
 }
 section aside nav div {
   width: 100px;
@@ -51,6 +52,7 @@ section main header nav {
   display: flex;
   justify-content: flex-start;
   margin: auto auto auto 0;
+  cursor: pointer;
 }
 section main header nav div {
   display: inline-block;
@@ -102,6 +104,17 @@ section main article table th {
 }
 section main article table td {
   white-space:nowrap;
+}
+table, th, td {
+  border: 1px solid lime;
+  border-collapse: collapse;
+}
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: lime;
+  border: none;
+  color: black;
+  font-family: "Comic Sans", "Comic Sans MS", cursive;
+  cursor: pointer;
 }
 [maxlength="10"] {
   width: 17ch;
