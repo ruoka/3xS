@@ -34,8 +34,11 @@ int main([[maybe_unused]]int argc, [[maybe_unused]]char const **argv)
     const auto controller = file("js/controller.js");
     server.get("/controller.js").script(controller);
 
-    const auto model = file("json/model.json");
-    server.get("/model.json").json(model);
+    const auto model = file("js/model.js");
+    server.get("/model.js").script(model);
+
+    const auto models = file("json/models.json");
+    server.get("/models.json").json(models);
 
     server.listen("8080");
     return 0;
