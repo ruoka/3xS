@@ -1,108 +1,109 @@
 body {
   display: flex;
   min-height: 95vh;
-  flex-direction: column;
   background: black;
   color: lime;
   font-family: "Comic Sans", "Comic Sans MS", cursive;
-}
-section {
-  display: flex;
-  flex: auto;
-}
-section aside {
-  display: flex;
-  flex-flow: column;
-  flex: none;
   padding-right: 30px;
   padding-left: 30px;
 }
-section aside header {
+aside {
+  display: flex;
+  flex-flow: column;
+  flex: none;
+}
+aside header {
   display: flex;
   flex: none;
   height: 90px;
 }
-section aside header h2 {
+aside header h2 {
   font-size: 40px;
   font-weight: bold;
   margin: auto;
 }
-section aside nav {
+.active {
+  color: black;
+  background-color: lime;
+}
+.inactive {
+  color: lime;
+  background-color: black;
+}
+aside nav {
   padding-top: 10px;
   cursor: pointer;
 }
-section aside nav div {
+aside nav div {
   width: 100px;
   margin-bottom: 20px;
   text-align: left;
-  color: black;
 }
-section main {
+main {
   display: flex;
   flex-flow: column;
   flex: 1 1 auto;
 }
-section main header {
+main header {
   display: flex;
   flex-flow: row nowrap;
   flex: none;
   height: 90px;
 }
-section main header nav {
+main header div {
+  width: 300px;
+  margin: auto 0 auto auto;
+  text-align: right;
+}
+main nav {
   display: flex;
   justify-content: flex-start;
   margin: auto auto auto 0;
   cursor: pointer;
 }
-section main header nav div {
+main nav div {
   display: inline-block;
   width: 100px;
   margin-right: 20px;
   text-align: center;
-  color: black;
 }
-section main header div {
-  align-self: flex-end;
-  width: 300px;
-  margin: auto 0 auto auto;
-  text-align: left;
-}
-section main form {
+main form {
   padding-top: 10px;
   height: 80vh;
   max-width: 85vw;
   overflow:scroll;
 }
-section main form label {
+main form label {
   display: inline-block;
   width: 80px;
 }
-section main article {
+main article {
   padding-top: 10px;
   height: 80vh;
   max-width: 85vw;
   overflow:scroll;
+  font-size: 15px;
 }
-section main article label {
+main article label {
   display: inline-block;
   width: 200px;
 }
-section main article form fieldset {
+main article form fieldset {
   padding-top:10px;
   border:1px solid lime;
   border-radius:8px;
   box-shadow:0 0 10px #666;
 }
-section main article form fieldset[disabled] select {
+main article form fieldset[disabled] select {
   background-color:white;
 }
-section main article table {
+main article table {
   table-layout: auto;
 }
-section main article table th {
+main article table th {
   text-align: left;
 }
-section main article table td {
+main article table td {
   white-space:nowrap;
 }
 table, th, td {
@@ -128,7 +129,7 @@ input[type=button], input[type=submit], input[type=reset] {
 [maxlength="35"] {
   width: 36ch;
 }
-body footer {
+main footer {
   padding-top: 15px;
   text-align: center;
 }

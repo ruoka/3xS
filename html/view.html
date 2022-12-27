@@ -1,70 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>3XS</title>
-    <link rel = "stylesheet" type = "text/css" href = "view.css"/>
-<!--<script src = "controller.js" type = "text/javascript" defer></script>-->
-    <script src = "controller.js" type="module" defer></script>
+    <link rel = "stylesheet" type = "text/css" href = "view.css">
+    <!--<script src = "controller.js" type = "text/javascript" defer></script>-->
+    <script src = "controller.js" type="module"></script>
 </head>
 <body>
-    <section>
-        <aside>
-            <header>
-                <h2>3xS&trade;</h2>
-            </header>
-            <nav id = "models">
-                <div id = "orders">Orders</div>
-                <div id = "trades">Trades</div>
-                <div id = "ssis">SSIs</div>
-                <div id = "sis">SIs</div>
-                <div id = "transfers">Trasfers</div>
-                <div id = "balances">Balances</div>
-                <div id = "messages">Messages</div>
-            </nav>
-        </aside>
-        <main>
-            <header>
-                <nav class = "orders">
-                    <div class = "post">Enter</div>
-                    <div class = "get">Search</div>
-                </nav>
-                <nav class = "trades">
-                    <div class = "post">Capture</div>
-                    <div class = "get">Search</div>
-                </nav>
-                <nav class = "ssis">
-                    <div class = "post">Add</div>
-                    <div class = "get">Search</div>
-                </nav>
-                <nav class = "sis">
-                    <div class = "post">Instruct</div>
-                    <div class = "get">Search</div>
-                </nav>
-                <nav class = "transfers">
-                    <div class = "post">Enter</div>
-                    <div class = "get">Search</div>
-                </nav>
-                <nav class = "balances">
-                    <div class = "get">Search</div>
-                </nav>
-                <nav class = "messages">
-                    <div class = "post">Upload</div>
-                    <div class = "get">Search</div>
-                </nav>
-                <div><time>1976-02-22T10:00:00+02:00</time><br/>Superuser</div>
-            </header>
-            <form action="/" method='post'>
-                <label>Username</label>
-                <input type="text" id="username"><br/>
-                <label>Password</label>
-                <input type="password" id="password"><br>
-                <input id="login" type="submit" value="Login">
-            </form>
-            <article id = "article"></article>
-        </main>
-    </section>
-    <footer>
-        <div>Copyright &copy; 2017 Kaius Ruokonen</div>
-    </footer>
+    <aside>
+        <header>
+            <h2>3xS&trade;</h2>
+        </header>
+        <nav id = "models">
+            <div id = "orders">Orders</div>
+            <div id = "trades">Trades</div>
+            <div id = "ssis">SSIs</div>
+            <div id = "sis">SIs</div>
+            <div id = "transfers">Trasfers</div>
+            <div id = "balances">Balances</div>
+            <div id = "messages">Messages</div>
+        </nav>
+    </aside>
+    <main>
+        <header>
+            <div><time>1976-02-22T10:00:00+02:00</time><br>Superuser</div>
+        </header>
+        <form action="/" method='post'>
+            <label>Username</label>
+            <input type="text" id="username"><br>
+            <label>Password</label>
+            <input type="password" id="password"><br>
+            <input id="login" type="submit" value="Login">
+        </form>
+        <nav class = "orders">
+            <div class = "post">Enter</div>
+            <div class = "get">Search</div>
+        </nav>
+        <nav class = "trades">
+            <div class = "post">Capture</div>
+            <div class = "get">Search</div>
+        </nav>
+        <nav class = "ssis">
+            <div class = "post">Add</div>
+            <div class = "get">Search</div>
+        </nav>
+        <nav class = "sis">
+            <div class = "post">Instruct</div>
+            <div class = "get">Search</div>
+        </nav>
+        <nav class = "transfers">
+            <div class = "post">Enter</div>
+            <div class = "get">Search</div>
+        </nav>
+        <nav class = "balances">
+            <div class = "get">Search</div>
+        </nav>
+        <nav class = "messages">
+            <div class = "post">Upload</div>
+            <div class = "get">Search</div>
+        </nav>
+        <article id = "article"><h2>javascript will update this part</h2></article>
+        <footer>
+            Copyright &copy; 2017 Kaius Ruokonen
+        </footer>
+    </main>
 </body>
 </html>

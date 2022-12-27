@@ -48,7 +48,7 @@ window.onload = () => {
         one("#article").innerHTML = content
     }
 
-    all("main header nav", element => element.style.display = "none")
+    all("main nav", element => element.style.display = "none")
 
     one("#login").onclick = event => {
         alert("Login")
@@ -72,7 +72,6 @@ window.onload = () => {
             one("aside nav").style.display = "block"
             one("main form").style.display = "none"
             one("main article").style.display = "block"
-            all("aside nav div", element => element.style.color = "lime")
         })
         .catch(error => {
             alert("Login failed: ", error);
@@ -99,46 +98,32 @@ window.onload = () => {
 
     all("aside nav div", element => element.onclick = event => {
         siblings(event.target, element => {
-            element.classList.remove("active")
-            element.style.color = "lime"
-            element.style.backgroundColor = "black"
+            element.classList.replace("active","inactive")
         })
         event.target.classList.add("active")
-        event.target.style.color = "black"
-        event.target.style.backgroundColor = "lime"
-        all("main header nav div", element => {
-            element.classList.remove("active")
-            element.style.color = "lime"
-            element.style.backgroundColor = "black"
+        all("main nav div", element => {
+            element.classList.replace("active","inactive")
         })
-        all("main header nav", element => element.style.display = "none")
-        all("main header nav." + event.target.getAttribute("id"), element => element.style.display = "block")
+        all("main nav", element => element.style.display = "none")
+        all("main nav." + event.target.getAttribute("id"), element => element.style.display = "block")
         render("")
     })
 
-    all("main header nav div.post", element => element.onclick = event => {
+    all("main nav div.post", element => element.onclick = event => {
         siblings(event.target, element => {
-            element.classList.remove("active")
-            element.style.color = "lime"
-            element.style.backgroundColor = "black"
+            element.classList.replace("active","inactive")
         })
         event.target.classList.add("active")
-        event.target.style.color = "black"
-        event.target.style.backgroundColor = "lime"
         const name = one("aside nav div.active").getAttribute("id")
         model.form(name).then(render)
     })
 
-    all("main header nav div.get", element => element.onclick = event => {
+    all("main nav div.get", element => element.onclick = event => {
         event.preventDefault()
         siblings(event.target, element => {
-            element.classList.remove("active")
-            element.style.color = "lime"
-            element.style.backgroundColor = "black"
+            element.classList.replace("active","inactive")
         })
         event.target.classList.add("active")
-        event.target.style.color = "black"
-        event.target.style.backgroundColor = "lime"
         const name = one("aside nav div.active").getAttribute("id")
         model.read(name).then(render)
     })
